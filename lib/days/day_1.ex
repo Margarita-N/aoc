@@ -22,16 +22,16 @@ defmodule Aoc.Days.Day1 do
     {:ok, contents} = File.read("lib/inputs/day_1.txt")
 
     String.split(contents, "\n")
-    |> test([], [])
+    |> parse_row([], [])
   end
 
-  defp test([], base, compare) do
+  defp parse_row([], base, compare) do
     {base, compare}
   end
 
-  defp test([head | body], base, compare) do
+  defp parse_row([head | body], base, compare) do
     [first, second] = String.split(head, " ", trim: true) |> Enum.map(&String.to_integer/1)
 
-    test(body, [first | base], [second | compare])
+    parse_row(body, [first | base], [second | compare])
   end
 end

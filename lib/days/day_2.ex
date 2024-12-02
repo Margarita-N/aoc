@@ -44,14 +44,10 @@ defmodule Aoc.Days.Day2 do
         end
       end)
 
-    IO.inspect(safe_unsafe)
-
     safe =
       result
       |> Enum.filter(fn {_, is_valid} -> is_valid == 1 end)
       |> Enum.count()
-
-    IO.inspect(safe)
 
     safe + safe_unsafe
   end

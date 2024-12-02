@@ -24,3 +24,6 @@ aoc-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Input files for each day
+/lib/inputs/

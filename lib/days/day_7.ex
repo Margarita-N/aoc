@@ -21,6 +21,8 @@ defmodule Aoc.Days.Day7 do
 
   def test([], value, acc) when value == acc, do: :solved
   def test([], _, acc), do: :unsolved
+  def test(values, value, acc) when acc > value, do: :unsolved
+
   def test([head | tail], value, acc) do
     Enum.reduce_while(@part_2_operators, :unsolved, fn operator, _ ->
       acc =

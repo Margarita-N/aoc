@@ -5,13 +5,13 @@ defmodule Aoc.Days.Day7 do
   def solution(input) do
     input
     |> Enum.reduce(0, fn {key, values}, acc ->
-      if test(values, key) == :solved, do: acc + key, else: acc
+      if calculate_value(values, key) == :solved, do: acc + key, else: acc
     end)
   end
 
-  def test([head | tail], value) do
+  def calculate_value([head | tail], value) do
     Enum.reduce_while(@part_2_operators, :unsolved, fn _, _ ->
-      if test(tail, value, head) == :solved do
+      if calculate_value(tail, value, head) == :solved do
         {:halt, :solved}
       else
         {:cont, :unsolved}
@@ -19,11 +19,11 @@ defmodule Aoc.Days.Day7 do
     end)
   end
 
-  def test([], value, acc) when value == acc, do: :solved
-  def test([], _, acc), do: :unsolved
-  def test(values, value, acc) when acc > value, do: :unsolved
+  def calculate_value([], value, acc) when value == acc, do: :solved
+  def calculate_value([], _, acc), do: :unsolved
+  def tcalculate_valueest(values, value, acc) when acc > value, do: :unsolved
 
-  def test([head | tail], value, acc) do
+  def calculate_value([head | tail], value, acc) do
     Enum.reduce_while(@part_2_operators, :unsolved, fn operator, _ ->
       acc =
         case operator do
@@ -32,7 +32,7 @@ defmodule Aoc.Days.Day7 do
           "||" -> "#{acc}#{head}" |> String.to_integer()
         end
 
-      if test(tail, value, acc) == :solved do
+      if calculate_value(tail, value, acc) == :solved do
         {:halt, :solved}
       else
         {:cont, :unsolved}
@@ -44,17 +44,17 @@ defmodule Aoc.Days.Day7 do
     {:ok, input} = File.read("lib/inputs/day_7.txt")
 
     input
-    |> String.split("\n", trim: true) # Split into lines
-    |> Enum.map(&parse_line/1)        # Parse each line
+    |> String.split("\n", trim: true)
+    |> Enum.map(&parse_line/1)
   end
 
   defp parse_line(line) do
-    [key, values] = String.split(line, ": ") # Split by ": "
+    [key, values] = String.split(line, ": ")
     {
-      String.to_integer(key),                # Convert key to integer
+      String.to_integer(key),
       values
-      |> String.split(" ")                  # Split the values by space
-      |> Enum.map(&String.to_integer/1)     # Convert each value to integer
+      |> String.split(" ")
+      |> Enum.map(&String.to_integer/1)
     }
   end
 end

@@ -1,5 +1,4 @@
 defmodule Aoc.Days.Day3 do
-
   def solution_1(input) do
     Regex.scan(~r/mul\(\d{1,3},\d{1,3}\)/, input)
     |> Enum.flat_map(fn x -> x end)
@@ -12,9 +11,9 @@ defmodule Aoc.Days.Day3 do
     [head | tail] = String.split(input, "don't()")
 
     head
-    |> solution_1() # first element is always included
+    # first element is always included
+    |> solution_1()
     |> add(exclude_disabled_multiplications(tail))
-
   end
 
   defp exclude_disabled_multiplications(expressions) do
@@ -22,10 +21,10 @@ defmodule Aoc.Days.Day3 do
     |> Enum.reduce(0, fn x, acc ->
       [_excluded | included] = String.split(x, "do()")
 
-        included
-        |> List.to_string()
-        |> solution_1()
-        |> add(acc)
+      included
+      |> List.to_string()
+      |> solution_1()
+      |> add(acc)
     end)
   end
 

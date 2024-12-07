@@ -4,14 +4,14 @@ defmodule Aoc.Days.Day1 do
     compare_array = compare |> Enum.sort()
 
     Enum.zip(base_array, compare_array)
-    |> Enum.reduce(0, fn {x,y}, acc -> abs(x - y) + acc end)
+    |> Enum.reduce(0, fn {x, y}, acc -> abs(x - y) + acc end)
   end
 
   def solution_2({base, compare}) do
     base_array = base |> Enum.sort()
     compare_array = compare |> Enum.sort()
 
-    Enum.reduce(base_array, 0, fn x, acc -> compare_base(x, compare_array, acc)end)
+    Enum.reduce(base_array, 0, fn x, acc -> compare_base(x, compare_array, acc) end)
   end
 
   defp compare_base(x, [head | tail], acc) when x > head, do: compare_base(x, tail, acc)

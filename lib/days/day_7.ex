@@ -20,8 +20,8 @@ defmodule Aoc.Days.Day7 do
   end
 
   def calculate_value([], value, acc) when value == acc, do: :solved
-  def calculate_value([], _, acc), do: :unsolved
-  def tcalculate_valueest(values, value, acc) when acc > value, do: :unsolved
+  def calculate_value([], _, _), do: :unsolved
+  def calculate_valueest(_values, value, acc) when acc > value, do: :unsolved
 
   def calculate_value([head | tail], value, acc) do
     Enum.reduce_while(@part_2_operators, :unsolved, fn operator, _ ->
@@ -50,6 +50,7 @@ defmodule Aoc.Days.Day7 do
 
   defp parse_line(line) do
     [key, values] = String.split(line, ": ")
+
     {
       String.to_integer(key),
       values

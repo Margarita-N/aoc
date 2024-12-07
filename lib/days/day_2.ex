@@ -16,10 +16,12 @@ defmodule Aoc.Days.Day2 do
     {report, is_valid}
   end
 
-  defp validate_report_progress(trend, report = [head | [compare | tail]]) when length(report) >= 2 do
-    case (head - compare) * trend in [-1, -2, -3] do
+  defp validate_report_progress(trend, report = [head | [compare | tail]])
+       when length(report) >= 2 do
+    case ((head - compare) * trend) in [-1, -2, -3] do
       true ->
         validate_report_progress(trend, [compare | tail])
+
       false ->
         0
     end
@@ -28,8 +30,10 @@ defmodule Aoc.Days.Day2 do
   defp validate_report_progress(_, report) when length(report) == 1, do: 1
   defp validate_report_progress(_, _), do: 0
 
-  defp find_trend(trend) when trend > 0, do: -1 # decreasing
-  defp find_trend(_trend), do: 1 # increasing
+  # decreasing
+  defp find_trend(trend) when trend > 0, do: -1
+  # increasing
+  defp find_trend(_trend), do: 1
 
   def solution_2(input) do
     result = Enum.map(input, &validate_report_progress/1)
@@ -53,13 +57,16 @@ defmodule Aoc.Days.Day2 do
   end
 
   def check_error_levels(report, index) when index == length(report), do: :unsafe
+
   def check_error_levels(report, index) do
     report
     |> List.delete_at(index)
     |> validate_report_progress()
     |> case do
       {_, 1} ->
-        :safe # at least once is safe
+        # at least once is safe
+        :safe
+
       {_, 0} ->
         check_error_levels(report, index + 1)
     end
@@ -73,6 +80,7 @@ defmodule Aoc.Days.Day2 do
   end
 
   defp parse_row([]), do: []
+
   defp parse_row([head | tail]) do
     [String.split(head, " ", trim: true) |> Enum.map(&String.to_integer/1) | parse_row(tail)]
   end

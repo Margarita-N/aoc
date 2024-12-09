@@ -5,21 +5,21 @@ defmodule Aoc.Days.Day9 do
       |> Enum.count()
 
     input
-    |> test(0, -1 , 0, count)
+    |> calculate_sum(0, -1 , 0, count)
   end
 
-  defp test(_, start_index, end_index, acc, count) when start_index > (count + end_index), do: acc
+  defp calculate_sum(_, start_index, end_index, acc, count) when start_index > (count + end_index), do: acc
 
-  defp test(remaining_list = [head | tail], start_index, end_index, acc, count) when start_index <= (count + end_index) do
+  defp calculate_sum(remaining_list = [head | tail], start_index, end_index, acc, count) when start_index <= (count + end_index) do
     IO.inspect({start_index, end_index, acc})
     if head == "." do
       if Enum.at(tail, end_index) != "." do
-        test(tail, start_index + 1, end_index - 1, acc + (start_index * Enum.at(tail, end_index)))
+        calculate_sum(tail, start_index + 1, end_index - 1, acc + (start_index * Enum.at(tail, end_index)))
       else
-        test(remaining_list, start_index, end_index - 1, acc)
+        calculate_sum(remaining_list, start_index, end_index - 1, acc)
       end
     else
-      test(tail, start_index + 1, end_index, acc + (start_index * head))
+      calculate_sum(tail, start_index + 1, end_index, acc + (start_index * head))
     end
   end
 
